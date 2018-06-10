@@ -32,10 +32,10 @@ printField state boardX boardY | (boardX `mod` 2 == 0) && (boardY `mod` 2 == 0) 
 drawAnimalIfThereIsOne :: State -> Int -> Int -> String
 -- if current column and row has wolf, draw it
 drawAnimalIfThereIsOne ((Point wolfX wolfY):sheeps) boardX boardY | (boardX == wolfX && boardY == wolfY) = wolfChar
-                                                    | otherwise = drawSheep sheeps boardX boardY
+                                                    | otherwise = drawSheep sheeps boardX boardY 0
 
 -- draw sheeps
-drawSheep :: [Point] -> Int -> Int -> String
-drawSheep [] _ _ = blackChar
-drawSheep ((Point sheepX sheepY):remainingSheeps) boardX boardY | (sheepX == boardX && sheepY == boardY) = sheepChar 
-                                                                | otherwise = drawSheep remainingSheeps boardX boardY
+drawSheep :: [Point] -> Int -> Int -> Int -> String
+drawSheep [] _ _ _ = blackChar
+drawSheep ((Point sheepX sheepY):remainingSheeps) boardX boardY sheepIndex  | (sheepX == boardX && sheepY == boardY) = show sheepIndex
+                                                                            | otherwise = drawSheep remainingSheeps boardX boardY (sheepIndex + 1)
