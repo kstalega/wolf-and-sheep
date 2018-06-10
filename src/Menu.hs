@@ -29,25 +29,27 @@ getSheepIndexAsAInt :: Char -> Int
 getSheepIndexAsAInt x | isDigit x == True = digitToInt x
                       | otherwise = error "Index of sheep wrongly formattted"
 
-moveSheepToTheLeft :: State -> Int -> Char -> IO()
-moveSheepToTheLeft state sheepIndex directionOfMovement = do
+moveSheep :: State -> Int -> Int -> IO()
+moveSheep state sheepIndex directionOfMovement = do
                                                             if (elem p (possibleOneSheepMoves sheepIndex state))
                                                               then
                                                                 putStrLn "Move is possible"
                                                             else 
                                                                 putStrLn "Move is not possible"
                                                             where possibleMoves = possibleOneSheepMoves sheepIndex state
-                                                                  x = xPoint ((sheepsPos state) !! sheepIndex) + 1
-                                                                  y = yPoint ((sheepsPos state) !! sheepIndex) + 1
-                                                                  p = Point x y
+                                                                  xCurrent = xPoint ((sheepsPos state) !! sheepIndex)
+                                                                  xNext = xCurrent + directionOfMovement
+                                                                  yCurrent = yPoint ((sheepsPos state) !! sheepIndex)
+                                                                  yNext = yCurrent + 1
+                                                                  p = Point xNext yNext
 
 -- steer sheep
 steerSheep :: State -> Int -> Char -> IO()
 steerSheep state sheepIndex directionOfMovement = do
                                               if elem sheepIndex [0..3]
                                               then case [directionOfMovement] of
-                                                'L':_ -> moveSheepToTheLeft state sheepIndex directionOfMovement
-                                                'R':_ -> moveSheepToTheLeft state sheepIndex directionOfMovement
+                                                'L':_ -> moveSheep state sheepIndex (-1)
+                                                'R':_ -> moveSheep state sheepIndex 1
                                                 _ -> do
                                                       putStrLn "Wrong command 1"
                                               else
