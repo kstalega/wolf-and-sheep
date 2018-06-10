@@ -6,7 +6,7 @@ import DataStructures
 import Menu
 
 defaultState :: State
-defaultState = [(Point 3 6), (Point 0 1), (Point 3 0), (Point 5 0), (Point 7 0)]
+defaultState = [(Point 3 6), (Point 1 0), (Point 3 0), (Point 5 0), (Point 7 0)]
 
 -- new game
 newGame :: IO()
