@@ -28,21 +28,21 @@ getSheepIndexAsAInt x | isDigit x == True = digitToInt x
 
 moveSheep :: State -> Int -> Int -> IO()
 moveSheep state sheepIndex directionOfMovement = do
-                                                            if (elem p (possibleOneSheepMoves sheepIndex state))
-                                                              then do
-                                                                    -- move ship and rerender board
-                                                                    printBoard (movepPointToNPositionSafe (sheepIndex + 1) p state) 0 0
-                                                                    processComands (movepPointToNPositionSafe (sheepIndex + 1) p state)
-                                                            else 
-                                                                do
-                                                                  putStrLn "Move is not possible"
-                                                                  processComands state
-                                                            where possibleMoves = possibleOneSheepMoves sheepIndex state
-                                                                  xCurrent = xPoint ((sheepsPos state) !! sheepIndex)
-                                                                  xNext = xCurrent + directionOfMovement
-                                                                  yCurrent = yPoint ((sheepsPos state) !! sheepIndex)
-                                                                  yNext = yCurrent + 1
-                                                                  p = Point xNext yNext
+                                                  if (elem p (possibleOneSheepMoves sheepIndex state))
+                                                    then do
+                                                          -- move ship and rerender board
+                                                          printBoard (movepPointToNPositionSafe (sheepIndex + 1) p state) 0 0
+                                                          processComands (movepPointToNPositionSafe (sheepIndex + 1) p state)
+                                                  else 
+                                                      do
+                                                        putStrLn "Move is not possible"
+                                                        processComands state
+                                                  where possibleMoves = possibleOneSheepMoves sheepIndex state
+                                                        xCurrent = xPoint ((sheepsPos state) !! sheepIndex)
+                                                        xNext = xCurrent + directionOfMovement
+                                                        yCurrent = yPoint ((sheepsPos state) !! sheepIndex)
+                                                        yNext = yCurrent + 1
+                                                        p = Point xNext yNext
 
 -- steer sheep
 steerSheep :: State -> Int -> Char -> IO()
