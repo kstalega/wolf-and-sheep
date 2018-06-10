@@ -30,8 +30,9 @@ moveSheep :: State -> Int -> Int -> IO()
 moveSheep state sheepIndex directionOfMovement = do
                                                   if (elem p (possibleOneSheepMoves sheepIndex state))
                                                     then do
-                                                          -- move ship and rerender board
-                                                          printBoard (movepPointToNPositionSafe (sheepIndex + 1) p state) 0 0
+                                                          -- rerender board
+                                                          printBoard (getStateAfterWolfMove (getBestMove (movepPointToNPositionSafe (sheepIndex + 1) p state))) 0 0
+                                                          -- get next command
                                                           processComands (movepPointToNPositionSafe (sheepIndex + 1) p state)
                                                   else 
                                                       do

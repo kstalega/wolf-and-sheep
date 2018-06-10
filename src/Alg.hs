@@ -144,6 +144,9 @@ module Alg where
   getBestMove :: State -> FinalState
   getBestMove state = FinalState (snd (minmax True (generateGameTree 5 True state))) (wolfWins state) (sheepsWin state)
   
+  getStateAfterWolfMove :: FinalState -> State
+  getStateAfterWolfMove (FinalState finalstate _ _) = finalstate
+
   -- funkcja heurystyczna do oceny poszczególnych stanów gry
   -- WAGI DO DOPASOWANIA EKSPERYMANTALNEGO
   valueOfNode ws = 200 * (distanceWolfToEnd ws) - 200 * (distanceWolfToSheep ws) + 300 * (fromEnum(isMoreSheepPassed ws)) + 100 * (countWolfMoves ws) + 1000 * (fromEnum(wolfWins ws)) - 1000 * (fromEnum(sheepsWin ws))
