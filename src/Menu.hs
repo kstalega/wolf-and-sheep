@@ -12,9 +12,6 @@ processComands state = do
                   case operationID of
                     '-':'m':_ -> do
                                   processSheepSteering state commandSettings
-                                  putStrLn "Moving sheep"
-                                  printBoard state 0 0
-                                  processComands state
                     _ -> do
                           putStrLn "Wrong command"
                           processComands state
@@ -32,10 +29,14 @@ getSheepIndexAsAInt x | isDigit x == True = digitToInt x
 moveSheep :: State -> Int -> Int -> IO()
 moveSheep state sheepIndex directionOfMovement = do
                                                             if (elem p (possibleOneSheepMoves sheepIndex state))
-                                                              then
-                                                                putStrLn "Move is possible"
+                                                              then do
+                                                                    -- move ship and rerender board
+                                                                    printBoard (movepPointToNPositionSafe (sheepIndex + 1) p state) 0 0
+                                                                    processComands (movepPointToNPositionSafe (sheepIndex + 1) p state)
                                                             else 
-                                                                putStrLn "Move is not possible"
+                                                                do
+                                                                  putStrLn "Move is not possible"
+                                                                  processComands state
                                                             where possibleMoves = possibleOneSheepMoves sheepIndex state
                                                                   xCurrent = xPoint ((sheepsPos state) !! sheepIndex)
                                                                   xNext = xCurrent + directionOfMovement
