@@ -16,7 +16,7 @@ printBoard :: State -> Int -> Int -> IO ()
 printBoard state boardX boardY  | boardY < 8 = do 
                                     putStrLn ((printRow state boardX boardY) ++ "|")
                                     printBoard state 0 (boardY + 1)
-                           | otherwise = putStrLn ""
+                                | otherwise = putStrLn ""
 
 -- printing one row of board
 printRow :: State -> Int -> Int -> String
